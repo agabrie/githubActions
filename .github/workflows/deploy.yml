@@ -18,14 +18,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 21.x
+          node-version: 22.x
 
       - name: Install dependencies
         run: npm install
       
       - name: Build App
-        run: npm run build
+        uses: cypress-io/github-action@v6
+        with:
+          build: npm run build
+          start: npm run start
+          component: true
 
-      - name: Run vitest tests
-        run: npm run test
+      # - name: Run vitest tests
+      #   run: npm run test
 
