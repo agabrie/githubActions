@@ -1,39 +1,31 @@
-# Name of the GitHub Actions workflow
-name: Deploy
+name: Checking Tests
 
-# Trigger the workflow on push and pull request events to the main branch
 on:
-  push:
-    branches: [main]
   pull_request:
     branches:
-      - main
+      - develop
+      - staging
 
 jobs:
-  # Define a job named "ci"
-  ci:
-    # Specify the operating system to run the job on
+  test:
+    name: Checking Tests
     runs-on: ubuntu-latest
-    
-    # Define the steps to be executed in the job
+
     steps:
-      # Checkout the code from the repository
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # Define a step named "Test"
-      - name: Test
-        # Run install and test scripts
-        run: |
-            npm install
-            npm run test
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.x
 
-      # Define a step named "Deploy"
-      - name: Deploy
-        # Only run this step if the branch is main
-        if: github.ref == 'refs/heads/main'
-        # Set an environment variable with the deployment URL from secrets
-        env:
-          DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-        # Run the deployment command
-        run: |
-          curl "$DEPLOY_URL"
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build App
+        run: npm run build
+
+      - name: Run vitest tests
+        run: npm run test
+
