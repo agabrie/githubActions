@@ -1,8 +1,16 @@
 version: 2.1
+# Name of workflow
+name: Test workflow
 
 orbs:
   cypress: cypress-io/cypress@3.3.1
 
+  # Trigger workflow on all pull requests
+on:
+  pull_request:
+    branches:
+      - feature/branch
+      - staging
 jobs:
   start-server:
         docker:
