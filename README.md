@@ -1,6 +1,6 @@
 # Github Actions ![Build Passing](https://img.shields.io/badge/Build_Passing-green)
 
-## Table of Contents
+## Table of Content
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
